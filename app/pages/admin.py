@@ -14,11 +14,13 @@ from app.models import (
     ApplicantUpdate,
     MaritalStatus,
     OptionType,
+    UnitType,
     Urgency,
 )
 from app.nav import add_nav
 
 OPTION_LABELS = {o.value: o.name.replace("_", " ").title() for o in OptionType}
+UNIT_TYPE_LABELS = {u.value: u.value for u in UnitType}
 
 
 def _applicant_row(a: Applicant) -> dict:
@@ -29,7 +31,7 @@ def _applicant_row(a: Applicant) -> dict:
         "phone": a.phone,
         "email": a.email,
         "option": OPTION_LABELS[a.option_selected.value],
-        "unit_type": a.unit_type_preference,
+        "unit_type": a.unit_type_preference.value,
         "application_date": str(a.application_date),
         "paid": "Yes" if a.paid else "No",
         "status": a.status.value,
@@ -135,9 +137,11 @@ def admin_page() -> None:
                 option = ui.select(
                     OPTION_LABELS, value=applicant.option_selected.value, label="Option"
                 ).classes("w-full")
-                unit_type = ui.input("Unit type preference", value=applicant.unit_type_preference).classes(
-                    "w-full"
-                )
+                unit_type = ui.select(
+                    UNIT_TYPE_LABELS,
+                    value=applicant.unit_type_preference.value,
+                    label="Unit type preference",
+                ).classes("w-full")
                 urgency = ui.select(
                     {u.value: u.name.replace("_", " ").title() for u in Urgency},
                     value=applicant.urgency.value,
@@ -154,7 +158,7 @@ def admin_page() -> None:
                         address=address.value,
                         marital_status=MaritalStatus(marital.value),
                         option_selected=OptionType(option.value),
-                        unit_type_preference=unit_type.value,
+                        unit_type_preference=UnitType(unit_type.value),
                         urgency=Urgency(urgency.value),
                     )
                     with get_session() as session:
@@ -239,7 +243,9 @@ def admin_page() -> None:
         option_select = ui.select(OPTION_LABELS, value=OptionType.RENTAL.value, label="Option").classes(
             "w-full max-w-md"
         )
-        unit_type_input = ui.input("Unit type (optional, e.g. 2 bed 2 bath)").classes("w-full max-w-md")
+        unit_type_select = ui.select(
+            {"": "All unit types", **UNIT_TYPE_LABELS}, value="", label="Unit type"
+        ).classes("w-full max-w-md")
         columns = [
             {"name": "application_date", "label": "Applied", "field": "application_date"},
             {"name": "code", "label": "Code", "field": "code"},
@@ -252,8 +258,9 @@ def admin_page() -> None:
 
         def generate() -> None:
             with get_session() as session:
+                unit_type = UnitType(unit_type_select.value) if unit_type_select.value else None
                 results = crud.generate_availability_report(
-                    session, OptionType(option_select.value), unit_type_input.value or None
+                    session, OptionType(option_select.value), unit_type
                 )
             report_table.rows = [_applicant_row(a) for a in results]
             report_table.update()

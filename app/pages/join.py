@@ -9,7 +9,7 @@ from nicegui import ui
 from app import crud
 from app.db import get_session
 from app.logic import calculate_age, recommend_options
-from app.models import ApplicantCreate, MaritalStatus, OptionType, Urgency
+from app.models import ApplicantCreate, MaritalStatus, OptionType, UnitType, Urgency
 from app.nav import add_nav
 
 BANKING_DETAILS = {
@@ -73,7 +73,11 @@ def join_page() -> None:
             value=OptionType.RENTAL.value,
             label="Option applying for",
         ).classes("w-full")
-        unit_type = ui.input("Unit type preference (e.g. 2 bed 2 bath)").classes("w-full")
+        unit_type = ui.select(
+            {u.value: u.value for u in UnitType},
+            value=UnitType.ONE_BED.value,
+            label="Unit type preference",
+        ).classes("w-full")
         urgency = ui.select(
             {u.value: u.name.replace("_", " ").title() for u in Urgency},
             value=Urgency.LONG_TERM.value,
@@ -92,7 +96,6 @@ def join_page() -> None:
                 "Email": email.value,
                 "Address": address.value,
                 "Date of birth": dob.value,
-                "Unit type preference": unit_type.value,
             }
             missing = [label for label, value in required.items() if not value]
             if missing:
@@ -119,7 +122,7 @@ def join_page() -> None:
                 spouse_phone=spouse_phone.value or None,
                 spouse_email=spouse_email.value or None,
                 option_selected=OptionType(option.value),
-                unit_type_preference=unit_type.value,
+                unit_type_preference=UnitType(unit_type.value),
                 urgency=Urgency(urgency.value),
             )
             with get_session() as session:

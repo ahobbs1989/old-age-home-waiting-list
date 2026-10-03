@@ -3,7 +3,7 @@
 from datetime import date, timedelta
 
 from app import crud
-from app.models import ApplicantCreate, ApplicantUpdate, MaritalStatus, OptionType, Urgency
+from app.models import ApplicantCreate, ApplicantUpdate, MaritalStatus, OptionType, UnitType, Urgency
 
 
 def make_applicant_data(**overrides) -> ApplicantCreate:
@@ -17,7 +17,7 @@ def make_applicant_data(**overrides) -> ApplicantCreate:
         date_of_birth=date(1980, 1, 1),
         marital_status=MaritalStatus.SINGLE,
         option_selected=OptionType.RENTAL,
-        unit_type_preference="1 bed 1 bath",
+        unit_type_preference=UnitType.ONE_BED,
         urgency=Urgency.LONG_TERM,
     )
     data.update(overrides)
@@ -141,13 +141,15 @@ def test_generate_availability_report_filters_by_option_and_unit_type(session):
     crud.create_applicant(
         session,
         make_applicant_data(
-            email="a@example.com", option_selected=OptionType.RENTAL, unit_type_preference="1 bed"
+            email="a@example.com", option_selected=OptionType.RENTAL, unit_type_preference=UnitType.ONE_BED
         ),
     )
     crud.create_applicant(
         session,
         make_applicant_data(
-            email="b@example.com", option_selected=OptionType.LIFE_RIGHT_COUPLE, unit_type_preference="2 bed"
+            email="b@example.com",
+            option_selected=OptionType.LIFE_RIGHT_COUPLE,
+            unit_type_preference=UnitType.TWO_BED,
         ),
     )
 
@@ -155,7 +157,7 @@ def test_generate_availability_report_filters_by_option_and_unit_type(session):
     assert len(rental_report) == 1
     assert rental_report[0].email == "a@example.com"
 
-    filtered = crud.generate_availability_report(session, OptionType.RENTAL, unit_type="2 bed")
+    filtered = crud.generate_availability_report(session, OptionType.RENTAL, unit_type=UnitType.TWO_BED)
     assert filtered == []
 
 

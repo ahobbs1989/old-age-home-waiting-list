@@ -25,6 +25,12 @@ class Urgency(str, Enum):
     LONG_TERM = "long_term"
 
 
+class UnitType(str, Enum):
+    ONE_BED = "1 Bed"
+    TWO_BED = "2 Bed"
+    THREE_BED = "3 Bed"
+
+
 class ApplicationStatus(str, Enum):
     ACTIVE = "active"
     REMOVED = "removed"
@@ -54,7 +60,7 @@ class ApplicantBase(SQLModel):
     spouse_email: str | None = None
 
     option_selected: OptionType = OptionType.RENTAL
-    unit_type_preference: str
+    unit_type_preference: UnitType = UnitType.ONE_BED
     urgency: Urgency = Urgency.LONG_TERM
 
 
@@ -91,7 +97,7 @@ class ApplicantUpdate(SQLModel):
     spouse_phone: str | None = None
     spouse_email: str | None = None
     option_selected: OptionType | None = None
-    unit_type_preference: str | None = None
+    unit_type_preference: UnitType | None = None
     urgency: Urgency | None = None
 
 

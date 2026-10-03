@@ -16,6 +16,7 @@ from app.models import (
     Offer,
     OfferResponse,
     OptionType,
+    UnitType,
     WaitEstimateConfig,
 )
 
@@ -204,7 +205,7 @@ def respond_offer(session: Session, offer_id: int, accepted: bool) -> Offer | No
 
 
 def generate_availability_report(
-    session: Session, option_type: OptionType, unit_type: str | None = None
+    session: Session, option_type: OptionType, unit_type: UnitType | None = None
 ) -> list[Applicant]:
     """List active applicants for a given option (and optional unit type), in application order."""
     statement = (

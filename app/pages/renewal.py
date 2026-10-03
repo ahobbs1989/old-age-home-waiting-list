@@ -8,7 +8,7 @@ from nicegui import ui
 
 from app import crud
 from app.db import get_session
-from app.models import ApplicantUpdate, MaritalStatus, OptionType, Urgency
+from app.models import ApplicantUpdate, MaritalStatus, OptionType, UnitType, Urgency
 from app.nav import add_nav
 from app.pages.join import BANKING_DETAILS
 
@@ -53,9 +53,11 @@ def renewal_page() -> None:
                     value=applicant.option_selected.value,
                     label="Option applying for",
                 ).classes("w-full")
-                unit_type = ui.input("Unit type preference", value=applicant.unit_type_preference).classes(
-                    "w-full"
-                )
+                unit_type = ui.select(
+                    {u.value: u.value for u in UnitType},
+                    value=applicant.unit_type_preference.value,
+                    label="Unit type preference",
+                ).classes("w-full")
                 urgency = ui.select(
                     {u.value: u.name.replace("_", " ").title() for u in Urgency},
                     value=applicant.urgency.value,
@@ -72,7 +74,7 @@ def renewal_page() -> None:
                         address=address.value,
                         marital_status=MaritalStatus(marital.value),
                         option_selected=OptionType(option.value),
-                        unit_type_preference=unit_type.value,
+                        unit_type_preference=UnitType(unit_type.value),
                         urgency=Urgency(urgency.value),
                     )
                     with get_session() as session:
