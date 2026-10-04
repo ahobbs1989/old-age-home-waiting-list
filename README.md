@@ -1,238 +1,420 @@
 # Old Age Home — Waiting List System
 
-This is a simple website for managing a retirement home's waiting
-list: people can apply to join, check their place in line, and renew
-their application. Staff have an admin area to search records and run
-reports.
+This is a simple website for managing a retirement home's waiting list.
+People can apply to join the list, check their place in line, and renew
+their application. Staff get a password-protected admin area to search
+records, mark payments, and run reports.
 
-This guide assumes **no technical background**. It walks through three
-things, in order:
-
-1. [Download the code](#1-download-the-code) onto your computer
-2. [Run it on your own computer](#2-run-it-on-your-own-computer), just to see it working
-3. [Put it on the internet](#3-put-it-on-the-internet) so other people can use it from anywhere
-
-Each part takes about 10–15 minutes. Do them in order — part 3 depends
-on part 1.
-
-> If anything on screen doesn't match what's described here exactly,
-> it's usually because a website has changed its layout slightly.
-> Look for a button or link with a similar name nearby.
+**You do not need any technical knowledge to use this.** You won't write
+code or type commands yourself. Instead, you'll install two free-to-download
+programs and then *ask an AI assistant called Claude, in plain English*, to
+do everything for you: set the website up, change how it works, and put it
+on the internet.
 
 ---
 
-## 1. Download the code
+## What you'll do
 
-1. Open this page in your browser: **https://github.com/ahobbs1989/old-age-home-waiting-list**
-2. Click the green **`<> Code`** button near the top of the page.
-3. Click **Download ZIP**.
-4. Find the downloaded file (usually in your **Downloads** folder) — it
-   will be named something like `old_age_home-main.zip`.
-5. Right-click it and choose **Extract All...** (Windows) or just
-   double-click it (Mac) to unzip it.
-6. You now have a folder containing the code — move it somewhere easy
-   to find, like your Desktop, and remember where it is. The rest of
-   this guide calls this **the project folder**.
+| Part | What it is | Time |
+|---|---|---|
+| [Part 1](#part-1--get-a-claude-subscription) | Get a Claude subscription | 5 min |
+| [Part 2](#part-2--install-vs-code) | Install VS Code (the program you'll work in) | 5 min |
+| [Part 3](#part-3--download-this-project) | Download this project | 5 min |
+| [Part 4](#part-4--open-the-project-in-vs-code) | Open the project in VS Code | 2 min |
+| [Part 5](#part-5--install-claude-code-inside-vs-code) | Install Claude Code inside VS Code | 5 min |
+| [Part 6](#part-6--talk-to-claude) | Talk to Claude: it does the rest | as long as you like |
+
+Do the parts **in order**. Don't skip ahead.
+
+> **If something on your screen looks slightly different from this guide**,
+> don't worry. Websites and programs change their layout from time to time.
+> Look for a button with a similar name nearby. And once you reach Part 6,
+> you can simply ask Claude: *"My screen doesn't look like the guide. What
+> do I do?"*
 
 ---
 
-## 2. Run it on your own computer
+## Part 1 — Get a Claude subscription
 
-### Step 2.1 — Install Python
+Claude Code (the AI assistant you'll use) needs a **paid** Claude account.
+The free plan does **not** include it.
 
-The code is written in a language called Python, so your computer
-needs Python installed to run it.
+1. Go to **[claude.ai](https://claude.ai)** in your web browser.
+2. Click **Sign up** and create an account. You can use your email address
+   or a Google account.
+3. Once you're signed in, open the plans page (click your name or initials
+   in the corner, then **Upgrade** or **Settings → Billing**).
+4. Choose **Pro** (the cheapest paid plan, which is plenty for this) or
+   **Max**, and enter your payment details.
+5. Remember the email address you used. You'll need it in Part 5.
 
-1. Go to **[python.org/downloads](https://www.python.org/downloads/)**
-   and click the big **Download Python** button.
-2. Open the downloaded installer.
-3. **Windows only:** on the very first screen of the installer, tick
-   the checkbox at the bottom that says **"Add python.exe to PATH"**
-   (or "Add Python to PATH"). This step is easy to miss and causes
-   problems later if skipped.
-4. Click **Install Now** and let it finish.
-5. Mac users: the installer runs itself with default options — just
-   keep clicking **Continue** / **Install**.
+> If your organisation already gives you a Claude **Team** or **Enterprise**
+> account, use that instead. You don't need to buy anything.
 
-### Step 2.2 — Open a terminal in the project folder
+---
 
-A "terminal" is a plain window where you type commands instead of
-clicking buttons.
+## Part 2 — Install VS Code
+
+**VS Code** (short for "Visual Studio Code") is a free program from
+Microsoft. Think of it as the "office" where you and Claude will work on
+the website together.
+
+1. Go to **[code.visualstudio.com](https://code.visualstudio.com)**.
+2. Click the big blue **Download** button. The website automatically
+   picks the right version for your computer.
+3. Open the file you just downloaded (it's usually in your **Downloads**
+   folder).
 
 **On Windows:**
-1. Open the project folder in File Explorer.
-2. Click once in the empty address bar at the top of the window
-   (where the folder path is shown).
-3. Type `cmd` and press **Enter**. A black window (Command Prompt)
-   opens, already pointed at your project folder.
+
+4. Accept the agreement and click **Next** on each screen.
+5. When you see a screen of checkboxes, **tick all of them**, especially
+   **"Add to PATH"**.
+6. Click **Install**, then **Finish**.
 
 **On Mac:**
-1. Open the project folder in Finder.
-2. Right-click (or two-finger click) inside the folder on empty space.
-3. Choose **New Terminal at Folder**. (If you don't see this option,
-   open the **Terminal** app from Launchpad, type `cd ` with a space
-   after it, then drag the project folder into the window and press
-   **Enter**.)
 
-### Step 2.3 — Install the app's requirements
+4. The download is a `.zip` file. Double-click it and it will turn into
+   an app called **Visual Studio Code**.
+5. Drag **Visual Studio Code** into your **Applications** folder.
+6. Open it from Applications (or Launchpad). If the Mac asks *"Are you
+   sure you want to open it?"*, click **Open**.
 
-Copy and paste these commands into the terminal window, one line at a
-time, pressing **Enter** after each one.
-
-**Windows (Command Prompt):**
-```
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-**Mac (Terminal):**
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-This downloads everything the app needs. It can take a minute or two,
-and will print a lot of text — that's normal.
-
-### Step 2.4 — Run the app
-
-In the same terminal window, type:
-
-**Windows:**
-```
-python main.py
-```
-
-**Mac:**
-```
-python3 main.py
-```
-
-You should see a message like `NiceGUI ready to go on http://localhost:8080`.
-
-Open your web browser and go to: **http://localhost:8080**
-
-The website is now running — but only on your own computer, and only
-while that terminal window stays open. Closing the terminal stops it.
-This is normal and expected at this stage; part 3 makes it available
-permanently, to everyone, from anywhere.
-
-To stop it, click into the terminal window and press **Ctrl+C**.
+When VS Code opens, you'll see a welcome screen. You can close any
+"Welcome" or "Get Started" tabs. You don't need them.
 
 ---
 
-## 3. Put it on the internet
+## Part 3 — Download this project
 
-To let other people use the site from their own computers or phones,
-it needs to run on a server rather than your own computer. We'll use a
-free service called **Railway** that runs the app for you, around the
-clock.
+1. Go to this page: **https://github.com/ahobbs1989/old-age-home-waiting-list**
+2. Click the green **`<> Code`** button near the top right of the list of
+   files.
+3. Click **Download ZIP** at the bottom of the little menu that appears.
+4. Find the downloaded file in your **Downloads** folder. It will be called
+   something like `old-age-home-waiting-list-main.zip`.
+5. **Unzip it:**
+   - **Windows:** right-click the file, choose **Extract All...**, then
+     click **Extract**.
+   - **Mac:** double-click the file.
+6. You now have a normal folder with the same name (without `.zip`).
+   **Move this folder to your Desktop** (or your Documents folder) so it's
+   easy to find. **Don't** leave it inside the zip file or your Downloads
+   folder.
 
-### Step 3.1 — Put your code on GitHub
+From now on, this guide calls that folder **the project folder**.
 
-Railway deploys code from GitHub, so if you haven't already, you need
-a copy of this code in your own GitHub account:
-
-1. Go to **[github.com](https://github.com)** and sign in (or create a
-   free account if you don't have one).
-2. Go back to **https://github.com/ahobbs1989/old-age-home-waiting-list**
-   and click the **Fork** button near the top-right. This creates your
-   own copy of the project under your GitHub account.
-
-### Step 3.2 — Create a Railway account
-
-1. Go to **[railway.app](https://railway.app)**.
-2. Click **Login** (or **Start a New Project**) and choose
-   **Continue with GitHub**. This connects Railway to your GitHub
-   account so it can read your forked repository.
-
-### Step 3.3 — Deploy the app
-
-1. In Railway, click **New Project**.
-2. Choose **Deploy from GitHub repo**.
-3. Pick your fork of this project from the list (authorize Railway to
-   access it if asked).
-4. Railway will start building the app automatically — you'll see a
-   progress screen with logs. This takes a few minutes the first time.
-5. Click on the deployed service (the box that appears), then open the
-   **Settings** tab.
-6. Scroll to **Deploy** and find **Custom Start Command**. Set it to:
-   ```
-   python main.py
-   ```
-7. Still in Settings, find **Networking**, and click **Generate
-   Domain**. Railway will give you a public web address like
-   `your-app-name.up.railway.app` — this is the link you'll share with
-   people.
-
-### Step 3.4 — Keep the waiting-list data safe between restarts
-
-By default, anything the app saves can be lost when Railway restarts
-it. To keep applicant data safe permanently:
-
-1. In your Railway project, click **+ New** and choose **Volume**.
-2. Set the **Mount Path** to `/data`.
-3. Attach this volume to your app's service.
-4. Go to your service's **Variables** tab and add a new variable:
-   - Name: `DB_PATH`
-   - Value: `/data/app.db`
-5. Redeploy the service (Railway usually does this automatically after
-   a settings change — if not, there's a **Redeploy** button on the
-   deployments screen).
-
-### Step 3.5 — Set a real admin password
-
-Anyone who finds your site's link can try to log into the admin area,
-so change the password from its default before sharing the link
-widely:
-
-1. In Railway, go to your service's **Variables** tab.
-2. Add a variable:
-   - Name: `ADMIN_PASSWORD`
-   - Value: *(choose a password only staff should know)*
-3. Add a second variable, which keeps people logged in securely:
-   - Name: `STORAGE_SECRET`
-   - Value: *(any long random text, e.g. mash the keyboard for 30 characters)*
-4. Redeploy if it doesn't happen automatically.
-
-### Step 3.6 — Share it
-
-Visit the address from Step 3.3 in your own browser first, to make
-sure everything works. Then share that link with whoever needs to use
-the site — applicants can go straight to `/join` or `/status` on that
-address, and staff can use `/admin` with the password you set.
+> **Windows tip:** sometimes unzipping creates a folder *inside* a folder
+> with the same name. If you open the folder and see only one other folder
+> inside it, use that **inner** one as the project folder. You know you have
+> the right one when you can see files called `main.py` and `README.md`.
 
 ---
 
-## Troubleshooting
+## Part 4 — Open the project in VS Code
 
-**"python is not recognized" (Windows)**
-Python wasn't added to PATH during install. Re-run the Python
-installer, choose **Modify**, and make sure "Add python.exe to PATH"
-is ticked. Then close and reopen the terminal.
+1. Open **VS Code**.
+2. At the top of the screen, click **File**, then **Open Folder...**
+   (On a Mac it may just say **Open...**.)
+3. Find **the project folder** (on your Desktop), click it **once** so it's
+   highlighted, then click **Select Folder** (Windows) or **Open** (Mac).
+4. A box will pop up asking **"Do you trust the authors of the files in
+   this folder?"** Click **Yes, I trust the authors**.
+5. On the left side of VS Code you should now see a list of files,
+   including `main.py`, `README.md` and a folder called `app`.
 
-**"command not found: python" (Mac)**
-Use `python3` instead of `python` — Macs often only have `python3`
-installed.
+You'll never need to edit these files yourself. Claude will do that.
 
-**The terminal says "address already in use"**
-Something is already running on that port. Close any other terminal
-windows that might still be running `main.py`, then try again.
+> **Every time you come back to work on the website**, open VS Code. It
+> usually reopens the project folder automatically. If it doesn't, repeat
+> steps 2–4 above.
 
-**I forgot the admin password**
-Whoever has access to the Railway project can see and change it any
-time under the service's **Variables** tab (see Step 3.5).
+---
 
-**Changes I make on Railway don't seem to appear**
-Make sure you redeployed after changing a variable or setting — look
-for a **Redeploy** button on the Railway deployments screen.
+## Part 5 — Install Claude Code inside VS Code
+
+Claude Code is an add-on (VS Code calls these "extensions") that puts
+Claude right inside VS Code, where it can see the project and work on it.
+
+### Step 5.1: Install the extension
+
+1. Look at the narrow strip of icons down the **far left edge** of VS Code.
+2. Click the icon that looks like **four little squares** (one slightly
+   apart from the others). This is **Extensions**.
+   - Can't find it? Press **Ctrl+Shift+X** (Windows) or **Cmd+Shift+X**
+     (Mac).
+3. A search box appears at the top. Type **Claude Code**.
+4. Click the result called **Claude Code** published by **Anthropic**.
+   (Make sure it says Anthropic. Ignore look-alikes from other publishers.)
+5. Click the blue **Install** button.
+6. If VS Code asks whether you trust the publisher, click **Trust
+   Publisher & Install** (or similar).
+
+### Step 5.2: Open Claude and sign in
+
+1. Look for the **Claude icon** (a small orange star/spark shape). It
+   appears in one of these places:
+   - in the strip of icons on the **far left edge**, or
+   - in the **top right corner** of VS Code, when a file is open.
+   - Still can't find it? Press **Ctrl+Shift+P** (Windows) or
+     **Cmd+Shift+P** (Mac), type **Claude Code: Open**, and press **Enter**.
+2. Click it. A Claude chat panel opens.
+3. Click **Sign in** (or follow the on-screen prompt) and choose to log in
+   with your **Claude.ai account** (the one from Part 1).
+4. Your web browser opens. Log in if asked, then click **Authorize** /
+   **Allow**.
+5. Switch back to VS Code. The Claude panel should now show a box where
+   you can type a message. **You're ready.**
+
+> **Windows only:** if Claude tells you it needs **Git** installed, go to
+> **[git-scm.com/downloads](https://git-scm.com/downloads)**, download the
+> Windows version, and install it, clicking **Next** on every screen
+> without changing anything. Then close VS Code completely, reopen it, and
+> try again.
+
+---
+
+## Part 6 — Talk to Claude
+
+This is where everything happens. You type what you want in normal
+English, and Claude does it.
+
+Claude already knows about this project. There's a file in the project
+folder called `CLAUDE.md` that explains to Claude how the website is
+built and the rules it should follow. You don't need to explain any of
+that.
+
+### How it works
+
+1. Click in the message box at the bottom of the Claude panel.
+2. Type (or copy and paste) what you'd like. See the ready-made messages
+   below.
+3. Press **Enter**.
+4. Claude will reply, explain what it's going to do, and then start working.
+
+### When Claude asks for permission
+
+Before Claude changes a file or runs something on your computer, it will
+often **stop and ask you**. You'll see a box with buttons like **Yes**,
+**Yes, and don't ask again**, and **No**.
+
+- Read the one-line description of what it wants to do.
+- If it matches what you asked for, click **Yes**.
+- If you're not sure, click **No** and type: *"What were you trying to do
+  just then, and why? Please explain in plain English."*
+- Choosing **"Yes, and don't ask again"** for a type of action is fine
+  once you're comfortable. It saves you a lot of clicking.
+
+### Golden rules
+
+- **Ask for one thing at a time.** Wait until Claude has finished before
+  asking for the next thing.
+- **Tell Claude you're not technical.** It will explain things more simply
+  and walk you through any steps it can't do for you (like signing up for
+  a website).
+- **If you don't understand something, ask.** *"I don't understand, can you
+  explain that more simply?"* always works.
+- **If something goes wrong, tell Claude exactly what you see.** Copy any
+  error message and paste it in, or describe it: *"The page says 'Not
+  Found'."*
+- **Claude can undo things.** *"Please undo the last change you made"* is a
+  perfectly good request.
+- **Never paste real passwords or bank details into the chat** unless
+  you understand why Claude needs them. Claude will usually tell you where
+  to type them yourself instead.
+
+---
+
+## Ready-made messages to send Claude
+
+Copy any of these into the Claude message box. Change the wording in
+*italics* to suit you.
+
+### ▶ The very first thing to send
+
+```
+Hi Claude. I'm not technical at all and I've never done anything like
+this before. Please set up this project on my computer and start the
+website so I can see it in my web browser. Install anything that's
+needed, explain each step in plain English, and tell me exactly what to
+click if I need to do anything myself.
+```
+
+Claude will install what's needed (including a program called Python),
+start the website, and give you a link like `http://localhost:8080` to
+open in your browser.
+
+> The website only runs **on your computer** at this stage, and only while
+> VS Code is open. That's normal. It's for trying things out. Putting it on
+> the internet is covered further down.
+
+### ▶ Show me around
+
+```
+Please give me a simple tour of what this website does. What pages are
+there, what can applicants do, and what can staff do in the admin area?
+How do I log in to the admin area?
+```
+
+### ▶ Start the website again (next time you open VS Code)
+
+```
+Please start the website again so I can see it in my browser.
+```
+
+### ▶ Change how the website looks or works
+
+Describe the change the way you'd describe it to a person. For example:
+
+```
+On the "Join the waiting list" page, please add a field asking for the
+applicant's *preferred move-in date*. Make it optional. Then restart the
+website so I can see the change.
+```
+
+```
+Please change the *banking details shown for EFT payments* to:
+*Bank name, account number, branch code, reference format*.
+```
+
+```
+Please change the wording at the top of the home page to say
+*"Welcome to Sunnyvale Retirement Village"*.
+```
+
+```
+Please change the colours of the website to *dark green and white*.
+```
+
+After any change, it's a good idea to send:
+
+```
+Please check that everything still works properly after that change,
+and tell me in plain English if anything is broken.
+```
+
+### ▶ Put the website on the internet (so others can use it)
+
+```
+I want to put this website on the internet so applicants and staff can
+use it from anywhere. Please recommend the simplest, cheapest hosting
+option for someone non-technical, then walk me through it step by step.
+Make sure the waiting-list data is stored safely so it isn't lost when
+the server restarts, and make sure the admin password is changed from
+the default to something secure. Tell me exactly which websites to sign
+up for and what to click, and do as much of the work for me as you can.
+```
+
+Claude will guide you through creating any accounts you need (for example
+a free **GitHub** account to store the code online, and a hosting service
+such as **Railway**). Some steps, like signing up and entering payment
+details, you'll have to do yourself in your browser. Claude will tell
+you exactly what to click.
+
+> **Important:** the admin area's default password is `admin123`. Anyone
+> could guess that. Never share your website's link before the password
+> has been changed. The message above asks Claude to do this for you.
+
+### ▶ Update the live website after making changes
+
+Once the website is on the internet, changes you make with Claude only
+happen on your computer until you publish them:
+
+```
+I've made some changes and I'm happy with them. Please publish them
+to the live website, and tell me when it's done and how to check.
+```
+
+### ▶ Change the admin password
+
+```
+Please help me change the admin password on the live website. Don't ask
+me to type the new password into this chat. Tell me where to enter it
+myself.
+```
+
+### ▶ Back up the waiting-list data
+
+```
+Please explain how I can make a backup copy of all the waiting-list
+data from the live website, and help me do it now.
+```
+
+### ▶ When something's wrong
+
+```
+Something isn't working. Here's what I see: *describe what you see, or
+paste the error message here*. Please find out what's wrong and fix it,
+and explain what happened in plain English.
+```
+
+```
+The website was working yesterday and now it isn't. Please investigate
+and fix it.
+```
+
+### ▶ Save your work to GitHub
+
+```
+Please save all my changes to GitHub with a short description of what
+changed. If I haven't set up GitHub yet, walk me through it.
+```
+
+---
+
+## Common questions
+
+**Do I need to understand the code?**
+No. Ask Claude to explain anything you're curious about, but you never
+need to read or edit code yourself.
+
+**Will I break something?**
+It's very hard to do lasting damage. Claude can undo changes, and while
+you're trying things out on your own computer, nothing you do affects the
+live website. If you're worried, ask Claude *"Before you change anything,
+please save a copy so we can go back to it if needed."*
+
+**Where do I see the website while I'm working on it?**
+Ask Claude to start it. It will give you a link (usually
+`http://localhost:8080`) to open in your normal web browser. This link only
+works on your own computer.
+
+**How do staff log in to the admin area?**
+Add `/admin` to the end of the website's address (for example
+`http://localhost:8080/admin`) and enter the admin password. Ask Claude
+if you're not sure what the password currently is.
+
+**Does this website take card payments?**
+No. Applicants are shown your bank details and pay by EFT. Staff then
+mark the application as "paid" in the admin area. If you want real online
+payments one day, ask Claude what that would involve.
+
+**Does it send renewal reminder emails automatically?**
+No. The admin area has a **Renewal follow-up** report listing applicants
+who are overdue, so staff can contact them. Ask Claude if you'd like to
+explore automating this.
+
+**How accurate are the waiting-time estimates?**
+They're rough. They're based on a "units available per year" figure that
+staff set in the admin area under **Wait-time settings**. Keep that figure
+up to date for better estimates.
+
+**Claude stopped halfway / I closed VS Code by accident.**
+Just reopen VS Code, open the Claude panel, and say *"Please carry on with
+what we were doing"* or describe what you were trying to do.
+
+**Claude says I've hit a usage limit.**
+Claude subscriptions have a usage allowance that resets every few hours.
+Wait a while and try again, or consider upgrading your plan.
+
+**The Claude icon has disappeared.**
+Press **Ctrl+Shift+P** (Windows) or **Cmd+Shift+P** (Mac), type
+**Claude Code: Open**, and press **Enter**. If that doesn't work, repeat
+[Part 5](#part-5--install-claude-code-inside-vs-code).
 
 ---
 
 ## For developers
 
-If you're going to make changes to the code rather than just run it,
-see [CLAUDE.md](CLAUDE.md) for the project's architecture, conventions,
-and POC scope notes.
+If you're a developer, see [CLAUDE.md](CLAUDE.md) for the project's
+architecture, conventions, commands and scope notes.
